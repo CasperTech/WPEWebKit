@@ -4861,26 +4861,12 @@ void Document::unregisterForMediaVolumeCallbacks(Element* e)
 
 bool Document::audioPlaybackRequiresUserGesture() const
 {
-    if (DocumentLoader* loader = this->loader()) {
-        // If an audio playback policy was set during navigation, use it. If not, use the global settings.
-        AutoplayPolicy policy = loader->autoplayPolicy();
-        if (policy != AutoplayPolicy::Default)
-            return policy == AutoplayPolicy::AllowWithoutSound || policy == AutoplayPolicy::Deny;
-    }
-
-    return settings().audioPlaybackRequiresUserGesture();
+    return false;
 }
 
 bool Document::videoPlaybackRequiresUserGesture() const
 {
-    if (DocumentLoader* loader = this->loader()) {
-        // If a video playback policy was set during navigation, use it. If not, use the global settings.
-        AutoplayPolicy policy = loader->autoplayPolicy();
-        if (policy != AutoplayPolicy::Default)
-            return policy == AutoplayPolicy::Deny;
-    }
-
-    return settings().videoPlaybackRequiresUserGesture();
+   return false;
 }
 
 void Document::storageBlockingStateDidChange()

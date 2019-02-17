@@ -484,21 +484,6 @@ HTMLMediaElement::HTMLMediaElement(const QualifiedName& tagName, Document& docum
 
     if (document.ownerElement() || !document.isMediaDocument()) {
         const auto& topDocument = document.topDocument();
-        const bool isProcessingUserGesture = processingUserGestureForMedia();
-        const bool shouldAudioPlaybackRequireUserGesture = topDocument.audioPlaybackRequiresUserGesture() && !isProcessingUserGesture;
-        const bool shouldVideoPlaybackRequireUserGesture = topDocument.videoPlaybackRequiresUserGesture() && !isProcessingUserGesture;
-
-        if (shouldVideoPlaybackRequireUserGesture) {
-            m_mediaSession->addBehaviorRestriction(MediaElementSession::RequireUserGestureForVideoRateChange);
-            if (document.settings().requiresUserGestureToLoadVideo())
-                m_mediaSession->addBehaviorRestriction(MediaElementSession::RequireUserGestureForLoad);
-        }
-
-        if (page && page->isLowPowerModeEnabled())
-            m_mediaSession->addBehaviorRestriction(MediaElementSession::RequireUserGestureForVideoDueToLowPowerMode);
-
-        if (shouldAudioPlaybackRequireUserGesture)
-            m_mediaSession->addBehaviorRestriction(MediaElementSession::RequireUserGestureForAudioRateChange);
 
 #if ENABLE(WIRELESS_PLAYBACK_TARGET)
         if (shouldVideoPlaybackRequireUserGesture || shouldAudioPlaybackRequireUserGesture)
